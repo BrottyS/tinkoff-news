@@ -7,7 +7,8 @@
 //
 
 protocol ITinkoffNewsService: class {
-    func loadNews(completionHandler: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void)
+    func loadNews(completion: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void)
+    func loadNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailApiModel?, String?) -> Void)
 }
 
 class TinkoffNewsService: ITinkoffNewsService {
@@ -20,15 +21,28 @@ class TinkoffNewsService: ITinkoffNewsService {
     
     // MARK: - ITinkoffNewsService
     
-    func loadNews(completionHandler: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void) {
+    func loadNews(completion: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void) {
         let requestConfig = RequestFactory.TinkoffNewsRequests.newsListConfig()
         
         requestSender.send(config: requestConfig) { (result: Result<[TinkoffNewsListApiModel]>) in
             switch result {
             case .success(let news):
-                completionHandler(news, nil)
+                completion(news, nil)
             case .error(let error):
-                completionHandler(nil, error)
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func loadNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailApiModel?, String?) -> Void) {
+        let requestConfig = RequestFactory.TinkoffNewsRequests.newsDetailConfig(newId: newId)
+        
+        requestSender.send(config: requestConfig) { (result: Result<TinkoffNewsDetailApiModel>) in
+            switch result {
+            case .success(let newDetail):
+                completion(newDetail, nil)
+            case .error(let error):
+                completion(nil, error)
             }
         }
     }

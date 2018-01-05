@@ -13,7 +13,8 @@ protocol INewsDetailModel: class {
 }
 
 protocol INewsDetailModelDelegate: class {
-    
+    func setup(data: NewsDetailDisplayModel)
+    func show(error message: String)
 }
 
 class NewsDetailModel: INewsDetailModel {
@@ -33,11 +34,27 @@ class NewsDetailModel: INewsDetailModel {
     // MARK: - INewsDetailModel
     
     func fetchNewDetailFromCache() {
-        
+        cacheService.getNewDetail(newId: newId) { (newDetail: TinkoffNewsDetailCacheModel?, errorMessage) in
+            if let newDetail = newDetail {
+                let data = NewsDetailDisplayModel(content: newDetail.content)
+                self.delegate?.setup(data: data)
+            } else {
+                self.delegate?.show(error: errorMessage ?? "Error")
+            }
+        }
     }
     
     func fetchNewDetailFromApi() {
-        
+        tinkoffNewsService.loadNewDetail(newId: newId) { (newDetail: TinkoffNewsDetailApiModel?, errorMessage) in
+            if let newDetail = newDetail {
+                //self.cacheService.saveNews(news: news)
+                self.cacheService.saveNewDetail(newDetail: newDetail, for: self.newId)
+                let data = NewsDetailDisplayModel(content: newDetail.content)
+                self.delegate?.setup(data: data)
+            } else {
+                self.delegate?.show(error: errorMessage ?? "Error")
+            }
+        }
     }
     
 }

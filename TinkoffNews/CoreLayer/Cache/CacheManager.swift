@@ -11,6 +11,8 @@ import CoreData
 protocol ICacheManager: class {
     func getNews(completion: @escaping ([TinkoffNewsListCacheModel]?, String?) -> ())
     func saveNews(news: [TinkoffNewsListApiModel])
+    func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ())
+    func saveNewDetail(detail: TinkoffNewsDetailApiModel, for newId: String)
 }
 
 class CacheManager: ICacheManager {
@@ -75,6 +77,35 @@ class CacheManager: ICacheManager {
         
         performSave(context: context)
     }
+    
+    func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ()) {
+        let context = coreDataStack.mainContext
+        
+        guard let new = New.fetchNew(with: newId, in: context) else {
+            completion(nil, "Not found new with newId \(newId)")
+            return
+        }
+        
+        let newDetail = TinkoffNewsDetailCacheModel(content: new.content?.content ?? "")
+        completion(newDetail, nil)
+    }
+    
+    func saveNewDetail(detail: TinkoffNewsDetailApiModel, for newId: String) {
+        let context = coreDataStack.saveContext
+        
+        guard let new = New.fetchNew(with: newId, in: context) else {
+            return
+        }
+        
+        if let newDetailEntity = NewContent.insertNewContent(in: context) {
+            newDetailEntity.content = detail.content
+            new.content = newDetailEntity
+        }
+        
+        performSave(context: context)
+    }
+    
+    // MARK: - Private methods
     
     private func performSave(context: NSManagedObjectContext) {
         if context.hasChanges {

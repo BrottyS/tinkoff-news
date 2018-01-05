@@ -41,9 +41,8 @@ class NewsListViewController: UIViewController, INewsListModelDelegate {
         configureView()
         configureTableView()
         
-        //model.fetchNews()
         model.fetchNewsFromCache()
-        //model.fetchNewsFromApi()
+        model.fetchNewsFromApi()
     }
 
     // MARK: - Private methods

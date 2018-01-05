@@ -11,6 +11,8 @@ import CoreData
 protocol ICacheService: class {
     func getNews(completion: @escaping ([TinkoffNewsListCacheModel]?, String?) -> ())
     func saveNews(news: [TinkoffNewsListApiModel])
+    func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ())
+    func saveNewDetail(newDetail: TinkoffNewsDetailApiModel, for newId: String)
 }
 
 class CacheService: ICacheService {
@@ -31,6 +33,16 @@ class CacheService: ICacheService {
     
     func saveNews(news: [TinkoffNewsListApiModel]) {
         cacheManager.saveNews(news: news)
+    }
+    
+    func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ()) {
+        cacheManager.getNewDetail(newId: newId) { (newDetail, error) in
+            completion(newDetail, error)
+        }
+    }
+    
+    func saveNewDetail(newDetail: TinkoffNewsDetailApiModel, for newId: String) {
+        cacheManager.saveNewDetail(detail: newDetail, for: newId)
     }
     
 }

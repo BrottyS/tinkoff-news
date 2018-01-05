@@ -15,6 +15,11 @@ struct RequestFactory {
             return RequestConfig<TinkoffNewsListParser>(request: request, parser: TinkoffNewsListParser())
         }
         
+        static func newsDetailConfig(newId: String) -> RequestConfig<TinkoffNewsDetailParser> {
+            let request = TinkoffNewsDetailRequest(newId: newId)
+            return RequestConfig<TinkoffNewsDetailParser>(request: request, parser: TinkoffNewsDetailParser())
+        }
+        
     }
     
 }

@@ -5,10 +5,17 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="seenCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="content" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NewContent" inverseName="new" inverseEntity="NewContent" syncable="YES"/>
+    </entity>
+    <entity name="NewContent" representedClassName="NewContent" syncable="YES" codeGenerationType="class">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="new" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="New" inverseName="content" inverseEntity="New" syncable="YES"/>
     </entity>
     <fetchRequest name="AllNews" entity="New"/>
+    <fetchRequest name="ContentByNewId" entity="New" predicateString="new.id == $newId"/>
     <fetchRequest name="NewWithId" entity="New" predicateString="id == $newId"/>
     <elements>
-        <element name="New" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="New" positionX="-234" positionY="78" width="128" height="118"/>
+        <element name="NewContent" positionX="-36" positionY="45" width="128" height="73"/>
     </elements>
 </model>

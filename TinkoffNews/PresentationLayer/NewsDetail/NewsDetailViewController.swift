@@ -10,7 +10,11 @@ import UIKit
 
 class NewsDetailViewController: UIViewController, INewsDetailModelDelegate {
 
+    @IBOutlet weak var webView: UIWebView!
+    
     private let model: INewsDetailModel
+    
+    private var data: NewsDetailDisplayModel?
     
     init(model: INewsDetailModel) {
         self.model = model
@@ -23,10 +27,26 @@ class NewsDetailViewController: UIViewController, INewsDetailModelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        model.fetchNewDetailFromCache()
+        model.fetchNewDetailFromApi()
     }
 
     // MARK: - INewsDetailModelDelegate
     
+    func setup(data: NewsDetailDisplayModel) {
+        self.data = data
+        
+        if let data = self.data {
+            DispatchQueue.main.async {
+                self.webView.loadHTMLString(data.content, baseURL: nil)
+            }
+        }
+        
+    }
     
+    func show(error message: String) {
+        
+    }
 
 }
