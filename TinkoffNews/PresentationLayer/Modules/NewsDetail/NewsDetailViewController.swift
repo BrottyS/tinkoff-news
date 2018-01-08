@@ -46,7 +46,9 @@ class NewsDetailViewController: UIViewController, INewsDetailModelDelegate {
     }
     
     func show(error message: String) {
-        
+        DispatchQueue.main.async {
+            self.showAlert(title: "Ошибка", message: message)
+        }
     }
 
 }

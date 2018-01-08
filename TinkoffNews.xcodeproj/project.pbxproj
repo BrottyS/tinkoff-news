@@ -45,6 +45,7 @@
 		171C99961FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C99951FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift */; };
 		171C99981FFD53BB007A85A4 /* NewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C99971FFD53BB007A85A4 /* NewContent.swift */; };
 		171C999A20039315007A85A4 /* SeenCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C999920039315007A85A4 /* SeenCount.swift */; };
+		171C999C2003FF20007A85A4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C999B2003FF20007A85A4 /* UIViewControllerExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		171C99951FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffNewsDetailCacheModel.swift; sourceTree = "<group>"; };
 		171C99971FFD53BB007A85A4 /* NewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContent.swift; sourceTree = "<group>"; };
 		171C999920039315007A85A4 /* SeenCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeenCount.swift; sourceTree = "<group>"; };
+		171C999B2003FF20007A85A4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 		171C99431FF3C888007A85A4 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				171C999B2003FF20007A85A4 /* UIViewControllerExtensions.swift */,
 				171C994A1FF6B297007A85A4 /* Modules */,
 			);
 			path = PresentationLayer;
@@ -349,6 +352,7 @@
 				171C99961FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift in Sources */,
 				171C99861FFBB83D007A85A4 /* NewsDetailAssembly.swift in Sources */,
 				171C997D1FF810A5007A85A4 /* NewsListCell.swift in Sources */,
+				171C999C2003FF20007A85A4 /* UIViewControllerExtensions.swift in Sources */,
 				171C99581FF6C049007A85A4 /* RootAssembly.swift in Sources */,
 				171C99981FFD53BB007A85A4 /* NewContent.swift in Sources */,
 				171C998B1FFBB862007A85A4 /* NewsDetailViewController.swift in Sources */,

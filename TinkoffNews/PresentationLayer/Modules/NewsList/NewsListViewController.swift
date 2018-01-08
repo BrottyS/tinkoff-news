@@ -70,7 +70,9 @@ class NewsListViewController: UIViewController, INewsListModelDelegate {
     }
     
     func show(error message: String) {
-        
+        DispatchQueue.main.async {
+            self.showAlert(title: "Ошибка", message: message)
+        }
     }
     
     func updateSeenCount(for newId: String, with newValue: Int) {
