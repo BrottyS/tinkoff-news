@@ -137,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				171C994A1FF6B297007A85A4 /* Modules */,
-				171C996E1FF77C9E007A85A4 /* NewsDetail */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -178,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				171C994B1FF6B4FA007A85A4 /* NewsList */,
+				171C996E1FF77C9E007A85A4 /* NewsDetail */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
