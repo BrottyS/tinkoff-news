@@ -44,6 +44,7 @@
 		171C99941FFD4B6C007A85A4 /* NewsDetailDisplayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C99931FFD4B6C007A85A4 /* NewsDetailDisplayModel.swift */; };
 		171C99961FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C99951FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift */; };
 		171C99981FFD53BB007A85A4 /* NewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C99971FFD53BB007A85A4 /* NewContent.swift */; };
+		171C999A20039315007A85A4 /* SeenCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C999920039315007A85A4 /* SeenCount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		171C99931FFD4B6C007A85A4 /* NewsDetailDisplayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailDisplayModel.swift; sourceTree = "<group>"; };
 		171C99951FFD526A007A85A4 /* TinkoffNewsDetailCacheModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffNewsDetailCacheModel.swift; sourceTree = "<group>"; };
 		171C99971FFD53BB007A85A4 /* NewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContent.swift; sourceTree = "<group>"; };
+		171C999920039315007A85A4 /* SeenCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeenCount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				171C99731FF7B3D3007A85A4 /* CacheManager.swift */,
 				171C99751FF7C469007A85A4 /* New.swift */,
 				171C99971FFD53BB007A85A4 /* NewContent.swift */,
+				171C999920039315007A85A4 /* SeenCount.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				171C99881FFBB847007A85A4 /* NewsDetailModel.swift in Sources */,
 				171C997A1FF7D49E007A85A4 /* CacheService.swift in Sources */,
 				171C99541FF6B624007A85A4 /* NewsListModel.swift in Sources */,
+				171C999A20039315007A85A4 /* SeenCount.swift in Sources */,
 				171C998E1FFBF43F007A85A4 /* TinkoffNewsDetailRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

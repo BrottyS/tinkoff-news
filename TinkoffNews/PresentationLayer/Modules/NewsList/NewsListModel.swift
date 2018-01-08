@@ -12,14 +12,16 @@ protocol INewsListModel: class {
     weak var delegate: INewsListModelDelegate? { get set }
     func fetchNewsFromCache()
     func fetchNewsFromApi()
+    func incrementSeenCount(for newId: String)
 }
 
 protocol INewsListModelDelegate: class {
     func setup(dataSource: [NewsListCellDisplayModel])
     func show(error message: String)
+    func updateSeenCount(for newId: String, with newValue: Int)
 }
 
-class NewsListModel: INewsListModel {
+class NewsListModel: INewsListModel, ICacheServiceDelegate {
     
     var delegate: INewsListModelDelegate?
     
@@ -60,6 +62,16 @@ class NewsListModel: INewsListModel {
                 self.delegate?.show(error: errorMessage ?? "Error")
             }
         }
+    }
+    
+    func incrementSeenCount(for newId: String) {
+        cacheService.incrementSeenCount(for: newId)
+    }
+    
+    // MARK: - ICacheServiceDelegate
+    
+    func didIncrementSeenCount(for newId: String, newValue: Int) {
+        delegate?.updateSeenCount(for: newId, with: newValue)
     }
     
 }

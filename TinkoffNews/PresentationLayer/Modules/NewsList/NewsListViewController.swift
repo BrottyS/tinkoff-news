@@ -72,6 +72,16 @@ class NewsListViewController: UIViewController, INewsListModelDelegate {
     func show(error message: String) {
         
     }
+    
+    func updateSeenCount(for newId: String, with newValue: Int) {
+        if let index = dataSource.index(where: { $0.id == newId }) {
+            dataSource[index].seenCount = newValue
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
 
 }
 
@@ -96,6 +106,9 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let new = dataSource[indexPath.row]
+        
+        model.incrementSeenCount(for: new.id)
+        
         assembly.presentNewsDetailViewController(from: self, for: new.id)
         tableView.deselectRow(at: indexPath, animated: true)
     }

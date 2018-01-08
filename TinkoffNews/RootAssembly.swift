@@ -22,7 +22,9 @@ class RootAssembly: IRootAssembly {
     private let cacheService: ICacheService = {
         let coreDataStack: ICoreDataStack = CoreDataStack()
         let cacheManager: ICacheManager = CacheManager(coreDataStack: coreDataStack)
-        return CacheService(cacheManager: cacheManager)
+        let service = CacheService(cacheManager: cacheManager)
+        cacheManager.delegate = service
+        return service
     }()
     
     init() {

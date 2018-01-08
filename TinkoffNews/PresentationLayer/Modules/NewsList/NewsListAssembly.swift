@@ -37,7 +37,9 @@ class NewsListAssembly: INewsListAssembly {
     // MARK: - Private section
     
     private func newsListModel() -> INewsListModel {
-        return NewsListModel(tinkoffNewsService: tinkoffNewsService, cacheService: cacheService)
+        let model = NewsListModel(tinkoffNewsService: tinkoffNewsService, cacheService: cacheService)
+        cacheService.delegate = model
+        return model
     }
     
 }

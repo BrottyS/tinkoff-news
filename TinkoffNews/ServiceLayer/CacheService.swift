@@ -9,13 +9,21 @@
 import CoreData
 
 protocol ICacheService: class {
+    weak var delegate: ICacheServiceDelegate? { get set }
     func getNews(completion: @escaping ([TinkoffNewsListCacheModel]?, String?) -> ())
     func saveNews(news: [TinkoffNewsListApiModel])
     func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ())
     func saveNewDetail(newDetail: TinkoffNewsDetailApiModel, for newId: String)
+    func incrementSeenCount(for newId: String)
 }
 
-class CacheService: ICacheService {
+protocol ICacheServiceDelegate: class {
+    func didIncrementSeenCount(for newId: String, newValue: Int)
+}
+
+class CacheService: ICacheService, ICacheManagerDelegate {
+    
+    var delegate: ICacheServiceDelegate?
     
     private let cacheManager: ICacheManager
     
@@ -43,6 +51,16 @@ class CacheService: ICacheService {
     
     func saveNewDetail(newDetail: TinkoffNewsDetailApiModel, for newId: String) {
         cacheManager.saveNewDetail(detail: newDetail, for: newId)
+    }
+    
+    func incrementSeenCount(for newId: String) {
+        cacheManager.incrementSeenCount(for: newId)
+    }
+    
+    // MARK: - ICacheManagerDelegate
+    
+    func didIncrementSeenCount(for newId: String, newValue: Int) {
+        delegate?.didIncrementSeenCount(for: newId, newValue: newValue)
     }
     
 }
