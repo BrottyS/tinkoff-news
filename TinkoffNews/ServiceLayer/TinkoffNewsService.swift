@@ -7,7 +7,7 @@
 //
 
 protocol ITinkoffNewsService: class {
-    func loadNews(completion: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void)
+    func loadNews(first: Int, last: Int, completion: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void)
     func loadNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailApiModel?, String?) -> Void)
 }
 
@@ -21,8 +21,8 @@ class TinkoffNewsService: ITinkoffNewsService {
     
     // MARK: - ITinkoffNewsService
     
-    func loadNews(completion: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void) {
-        let requestConfig = RequestFactory.TinkoffNewsRequests.newsListConfig()
+    func loadNews(first: Int, last: Int, completion: @escaping ([TinkoffNewsListApiModel]?, String?) -> Void) {
+        let requestConfig = RequestFactory.TinkoffNewsRequests.newsListConfig(first: first, last: last)
         
         requestSender.send(config: requestConfig) { (result: Result<[TinkoffNewsListApiModel]>) in
             switch result {

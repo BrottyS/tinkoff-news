@@ -19,6 +19,7 @@ protocol INewsListModelDelegate: class {
     func setup(dataSource: [NewsListCellDisplayModel])
     func show(error message: String)
     func updateSeenCount(for newId: String, with newValue: Int)
+    func updateDataSource(with: [NewsListCellDisplayModel])
 }
 
 class NewsListModel: INewsListModel, ICacheServiceDelegate {
@@ -28,9 +29,15 @@ class NewsListModel: INewsListModel, ICacheServiceDelegate {
     private let tinkoffNewsService: ITinkoffNewsService
     private let cacheService: ICacheService
     
+    private let kPageSize = 20
+    private var first = 0
+    private var last = 0
+    
     init(tinkoffNewsService: ITinkoffNewsService, cacheService: ICacheService) {
         self.tinkoffNewsService = tinkoffNewsService
         self.cacheService = cacheService
+        first = 0
+        last = first + kPageSize
     }
     
     // MARK: - INewsListModel
@@ -50,14 +57,21 @@ class NewsListModel: INewsListModel, ICacheServiceDelegate {
     }
     
     func fetchNewsFromApi() {
-        tinkoffNewsService.loadNews { (news: [TinkoffNewsListApiModel]?, errorMessage) in
+        tinkoffNewsService.loadNews(first: first, last: last) { (news: [TinkoffNewsListApiModel]?, errorMessage) in
             if let news = news {
                 self.cacheService.saveNews(news: news)
+                
+                // TODO: получаем массив seenCountов по newsIdшникам из CoreData
+                
                 let cells = news.map({ NewsListCellDisplayModel(id: $0.id,
                                                                 date: $0.date,
                                                                 text: $0.text,
                                                                 seenCount: 0) })
-                self.delegate?.setup(dataSource: cells)
+                //self.delegate?.setup(dataSource: cells)
+                self.delegate?.updateDataSource(with: cells)
+                
+                self.first += self.kPageSize
+                self.last += self.kPageSize
             } else {
                 self.delegate?.show(error: errorMessage ?? "Error")
             }

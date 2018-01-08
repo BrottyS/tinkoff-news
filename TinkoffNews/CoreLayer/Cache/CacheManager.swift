@@ -133,8 +133,7 @@ class CacheManager: ICacheManager {
             }
         }
         
-        let save = performSave(context: context)
-        if save {
+        if performSave(context: context) {
             delegate?.didIncrementSeenCount(for: newId, newValue: newValue)
         }
     }

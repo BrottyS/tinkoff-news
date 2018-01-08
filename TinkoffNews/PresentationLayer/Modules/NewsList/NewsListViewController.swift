@@ -82,6 +82,22 @@ class NewsListViewController: UIViewController, INewsListModelDelegate {
             }
         }
     }
+    
+    func updateDataSource(with news: [NewsListCellDisplayModel]) {
+        for new in news {
+            if dataSource.contains(where: { $0.id == new.id }) {
+                continue
+            } else {
+                dataSource.append(new)
+            }
+        }
+        
+        dataSource = dataSource.sorted { $0.date > $1.date }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
 }
 
@@ -113,5 +129,11 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastItem = dataSource.count - 1
+        if indexPath.row == lastItem {
+            model.fetchNewsFromApi()
+        }
+    }
 }
 

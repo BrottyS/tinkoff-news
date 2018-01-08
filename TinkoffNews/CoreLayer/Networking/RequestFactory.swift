@@ -10,8 +10,8 @@ struct RequestFactory {
     
     struct TinkoffNewsRequests {
         
-        static func newsListConfig() -> RequestConfig<TinkoffNewsListParser> {
-            let request = TinkoffNewsListRequest(first: 10, last: 15)
+        static func newsListConfig(first: Int, last: Int) -> RequestConfig<TinkoffNewsListParser> {
+            let request = TinkoffNewsListRequest(first: first, last: last)
             return RequestConfig<TinkoffNewsListParser>(request: request, parser: TinkoffNewsListParser())
         }
         
