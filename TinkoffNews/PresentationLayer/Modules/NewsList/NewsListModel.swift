@@ -61,17 +61,18 @@ class NewsListModel: INewsListModel, ICacheServiceDelegate {
             if let news = news {
                 self.cacheService.saveNews(news: news)
                 
-                // TODO: получаем массив seenCountов по newsIdшникам из CoreData
-                
-                let cells = news.map({ NewsListCellDisplayModel(id: $0.id,
-                                                                date: $0.date,
-                                                                text: $0.text,
-                                                                seenCount: 0) })
-                //self.delegate?.setup(dataSource: cells)
-                self.delegate?.updateDataSource(with: cells)
-                
-                self.first += self.kPageSize
-                self.last += self.kPageSize
+                let newsIds = news.map { $0.id }
+                self.cacheService.getSeenCounts(for: newsIds) { seenCounts in
+                    let cells = news.map({ NewsListCellDisplayModel(id: $0.id,
+                                                                    date: $0.date,
+                                                                    text: $0.text,
+                                                                    seenCount: seenCounts[$0.id] ?? 0) })
+                    //self.delegate?.setup(dataSource: cells)
+                    self.delegate?.updateDataSource(with: cells)
+                    
+                    self.first += self.kPageSize
+                    self.last += self.kPageSize
+                }
             } else {
                 self.delegate?.show(error: errorMessage ?? "Error")
             }

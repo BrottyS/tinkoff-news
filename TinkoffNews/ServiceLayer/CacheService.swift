@@ -15,6 +15,7 @@ protocol ICacheService: class {
     func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ())
     func saveNewDetail(newDetail: TinkoffNewsDetailApiModel, for newId: String)
     func incrementSeenCount(for newId: String)
+    func getSeenCounts(for newsIds: [String], completion: @escaping ([String : Int]) -> ())
 }
 
 protocol ICacheServiceDelegate: class {
@@ -55,6 +56,12 @@ class CacheService: ICacheService, ICacheManagerDelegate {
     
     func incrementSeenCount(for newId: String) {
         cacheManager.incrementSeenCount(for: newId)
+    }
+    
+    func getSeenCounts(for newsIds: [String], completion: @escaping ([String : Int]) -> ()) {
+        cacheManager.getSeenCounts(for: newsIds) { seenCounts in
+            completion(seenCounts)
+        }
     }
     
     // MARK: - ICacheManagerDelegate

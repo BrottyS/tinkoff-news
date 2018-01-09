@@ -15,6 +15,7 @@ protocol ICacheManager: class {
     func getNewDetail(newId: String, completion: @escaping (TinkoffNewsDetailCacheModel?, String?) -> ())
     func saveNewDetail(detail: TinkoffNewsDetailApiModel, for newId: String)
     func incrementSeenCount(for newId: String)
+    func getSeenCounts(for newsIds: [String], completion: @escaping ([String : Int]) -> ())
 }
 
 protocol ICacheManagerDelegate: class {
@@ -136,6 +137,25 @@ class CacheManager: ICacheManager {
         if performSave(context: context) {
             delegate?.didIncrementSeenCount(for: newId, newValue: newValue)
         }
+    }
+    
+    func getSeenCounts(for newsIds: [String], completion: @escaping ([String : Int]) -> ()) {
+        let context = coreDataStack.mainContext
+        
+        var seenCounts = [String : Int]()
+        for newId in newsIds {
+            if let new = New.fetchNew(with: newId, in: context) {
+                if let value = new.seenCount?.value {
+                    seenCounts[newId] = Int(value)
+                } else {
+                    seenCounts[newId] = 0
+                }
+            } else {
+                seenCounts[newId] = 0
+            }
+        }
+        
+        completion(seenCounts)
     }
     
     // MARK: - Private methods
